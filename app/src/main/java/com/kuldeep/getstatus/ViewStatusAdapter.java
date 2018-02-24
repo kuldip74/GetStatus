@@ -36,11 +36,9 @@ public class ViewStatusAdapter extends RecyclerView.Adapter<ViewStatusAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        //String name = usersList.get(position).getUserName();
-        //Log.d("onBind View Holdr",name);
         holder.mUserTV.setText(usersList.get(position).getUserName());
         holder.mStatusTV.setText(usersList.get(position).getUserStatus());
-        final String userId = usersList.get(position).userId;
+        final String userId = usersList.get(position).getUserId();
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

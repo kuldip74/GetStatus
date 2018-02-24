@@ -38,9 +38,10 @@ public class ViewStatusActivity extends AppCompatActivity {
         mViewStatusAdapter = new ViewStatusAdapter(getApplicationContext(),usersList);
 
         mListRecycler = findViewById(R.id.status_recycle_view);
-        mListRecycler.setHasFixedSize(true);
+        mListRecycler.setHasFixedSize(false);
         mListRecycler.setLayoutManager(new LinearLayoutManager(this));
         mListRecycler.setAdapter(mViewStatusAdapter);
+        mListRecycler.getItemAnimator().setChangeDuration(0);
 
         firebaseFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -50,9 +51,6 @@ public class ViewStatusActivity extends AppCompatActivity {
 
                     Log.d(TAG, "Error : "+e.getMessage());
 
-                } else{
-
-                    Toast.makeText(ViewStatusActivity.this,"E is null",Toast.LENGTH_SHORT).show();
                 }
 
                 int pos = 0;
@@ -63,19 +61,19 @@ public class ViewStatusActivity extends AppCompatActivity {
 
                         String name = doc.getDocument().getString("name");
                         String status = doc.getDocument().getString("status");
-                        String userId = doc.getDocument().getId();
+                        String userId = doc.getDocument().getId().toString();
 
                         Log.d(TAG, "name and status: "+ name +"  "+ status);
 
-                        Users users = doc.getDocument().toObject(Users.class).withId(userId);
+                        Users users = new Users(name,status,userId);
 
                         usersList.add(users);
 
 
 
-                        String size = String.valueOf(usersList.get(pos).getUserName());
+                        //String size = String.valueOf(usersList.get(pos).getUserName());
 
-                        Log.d( "usr liST Size: ",doc.getDocument().toObject(Users.class).toString());
+                       // Log.d( "usr liST Size: ",doc.getDocument().toObject(Users.class).toString());
 
                         mViewStatusAdapter.notifyDataSetChanged();
 
